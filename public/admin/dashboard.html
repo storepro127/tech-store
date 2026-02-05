@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Dashboard</h1>
+
+<form id="f">
+
+<input name="name" placeholder="اسم المنتج">
+<input name="price" placeholder="السعر">
+
+<input type="file" name="image">
+
+<button>Add</button>
+
+</form>
+
+<script>
+
+document.getElementById("f")
+.onsubmit=async e=>{
+
+e.preventDefault();
+
+let form=new FormData(e.target);
+
+await fetch("/api/add-product",{
+method:"POST",
+body:form
+});
+
+alert("Product Added 🔥");
+
+};
+
+</script>
+
+</body>
+</html>
