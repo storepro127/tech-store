@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>ADMIN</h1>
+
+<input id="pass" placeholder="password">
+<button onclick="login()">Login</button>
+
+<script>
+
+function login(){
+
+fetch("/api/admin-login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+password:document.getElementById("pass").value
+})
+})
+.then(r=>r.json())
+.then(d=>{
+
+if(d.success)
+location.href="dashboard.html";
+else
+alert("Wrong password");
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
