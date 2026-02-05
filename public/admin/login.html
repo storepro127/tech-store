@@ -1,0 +1,29 @@
+<input id="pass">
+<button onclick="go()">Login</button>
+
+<script>
+
+async function go(){
+
+const res=await fetch("/admin-login",{
+
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({password:pass.value})
+
+});
+
+const d=await res.json();
+
+if(d.success){
+location.href="/admin/add-product.html";
+}else{
+alert("wrong");
+}
+
+}
+
+</script>
