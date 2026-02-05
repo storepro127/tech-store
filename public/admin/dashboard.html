@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+</head>
+
+<body style="font-family:Arial">
+
+<h1>🔥 ADMIN DASHBOARD</h1>
+
+<button onclick="goStore()">فتح المتجر</button>
+
+<h2 id="p"></h2>
+<h2 id="o"></h2>
+
+<script>
+
+fetch("/api/products")
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("p").innerText=
+"عدد المنتجات: "+d.length;
+});
+
+fetch("/api/orders")
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("o").innerText=
+"عدد الطلبات: "+d.length;
+});
+
+function goStore(){
+location.href="/";
+}
+
+</script>
+
+</body>
+</html>
