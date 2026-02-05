@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+
+<h2>Checkout</h2>
+
+<input id="name" placeholder="الاسم">
+<input id="phone" placeholder="الموبايل">
+<input id="address" placeholder="العنوان">
+
+<button onclick="order()">تأكيد الطلب</button>
+
+<script>
+
+const cart=JSON.parse(localStorage.getItem("cart"));
+
+async function order(){
+
+await fetch("/api/orders",{
+
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+name:name.value,
+phone:phone.value,
+address:address.value,
+cart,
+total:cart[0].price
+})
+
+});
+
+alert("تم الطلب 🔥");
+
+}
+
+</script>
+
+</body>
+</html>
