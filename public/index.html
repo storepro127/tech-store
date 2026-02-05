@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">
+🔥 TECH STORE
+<a href="cart.html">🛒 Cart</a>
+</div>
+
+<div id="products" class="products"></div>
+
+<script>
+
+fetch("/api/products")
+.then(r=>r.json())
+.then(data=>{
+
+let box=document.getElementById("products");
+
+data.forEach(p=>{
+
+box.innerHTML+=`
+
+<div class="card">
+
+<img src="${p.image}" height="200">
+
+<h3>${p.name}</h3>
+
+<p>${p.price} جنيه</p>
+
+<button onclick='add(${JSON.stringify(p)})'>
+ADD TO CART
+</button>
+
+</div>
+`;
+
+});
+
+});
+
+function add(p){
+
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+
+cart.push(p);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+alert("اتضاف للسلة 🔥");
+
+}
+
+</script>
+
+</body>
+</html>
