@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TECH STORE</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+
+/* 🔥 HEADER */
+.header{
+    background:#020617;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo img{
+    width:45px;
+}
+
+/* 🔥 PRODUCTS */
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+.card{
+    background:#020617;
+    border-radius:12px;
+    padding:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.price{
+    color:#22c55e;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* زرار السلة */
+.cart-btn{
+    background:#22c55e;
+    border:none;
+    padding:10px;
+    width:100%;
+    border-radius:8px;
+    margin-top:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 الهيدر -->
+<div class="header">
+
+    <div class="logo">
+        <img src="logo.png">
+        TECH STORE
+    </div>
+
+    <button onclick="location.href='/cart.html'" 
+    style="padding:10px;border-radius:8px;border:none;cursor:pointer">
+    🛒 السلة
+    </button>
+
+</div>
+
+<!-- المنتجات -->
+<div class="products" id="products"></div>
+
+
+<script>
+
+// 🔥 جلب المنتجات من السيرفر
+fetch("/api/products")
+.then(res=>res.json())
+.then(data=>{
+
+    let box=document.getElementById("products");
+
+    if(data.length===0){
+        box.innerHTML="<h2>مفيش منتجات لسه 😢</h2>";
+        return;
+    }
+
+    data.forEach(p=>{
+
+        box.innerHTML+=`
+
+        <div class="card" onclick="go('${p.id}')">
+
+            <img src="${p.image}">
+
+            <h3>${p.name}</h3>
+
+            <p class="price">${p.price} جنيه</p>
+
+            <button class="cart-btn"
+            onclick="event.stopPropagation();addToCart('${p.id}')">
+            اضف للسلة
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+});
+
+
+// صفحة المنتج
+function go(id){
+    location.href="/product.html?id="+id;
+}
+
+
+// 🔥 السلة
+function addToCart(id){
+
+    let cart=JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push(id);
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+
+    alert("تم إضافة المنتج للسلة ✅");
+
+}
+
+</script>
+
+</body>
+</html>
