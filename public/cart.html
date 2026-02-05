@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>🛒 Cart</h1>
+
+<div id="cart"></div>
+
+<input id="coupon" placeholder="كود الخصم">
+<button onclick="apply()">Apply</button>
+
+<h2 id="total"></h2>
+
+<script>
+
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+
+let total=0;
+
+cart.forEach(p=>{
+document.body.innerHTML+=`<p>${p.name} - ${p.price}</p>`;
+total+=Number(p.price);
+});
+
+document.getElementById("total").innerText="Total: "+total;
+
+function apply(){
+
+fetch("/api/check-coupon",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+code:document.getElementById("coupon").value
+})
+})
+.then(r=>r.json())
+.then(d=>{
+
+let newTotal=total-(total*(d.discount||0)/100);
+
+document.getElementById("total").innerText=
+"بعد الخصم: "+newTotal;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
