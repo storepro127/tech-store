@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+
+<h1>إضافة منتج</h1>
+
+<input id="name" placeholder="اسم المنتج"><br>
+<input id="price" placeholder="السعر"><br>
+<input id="discount" placeholder="خصم"><br>
+<input id="stock" placeholder="المخزون"><br>
+
+<textarea id="desc" placeholder="الوصف"></textarea><br>
+
+<input type="file" id="image"><br><br>
+
+<button onclick="add()">إضافة</button>
+
+<script>
+
+async function add(){
+
+const fd=new FormData();
+
+fd.append("name",name.value);
+fd.append("price",price.value);
+fd.append("discount",discount.value);
+fd.append("stock",stock.value);
+fd.append("description",desc.value);
+fd.append("image",image.files[0]);
+
+await fetch("/api/products",{
+method:"POST",
+body:fd
+});
+
+alert("تمت الإضافة🔥");
+
+}
+
+</script>
+
+</body>
+</html>
