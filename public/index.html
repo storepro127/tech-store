@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tech Store</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#EAEDED;
+}
+
+/* HEADER */
+.header{
+background:#131921;
+color:white;
+padding:15px;
+font-size:22px;
+font-weight:bold;
+}
+
+/* GRID */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:10px;
+padding:10px;
+transition:.2s;
+}
+
+.card:hover{
+transform:scale(1.03);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.price{
+color:#B12704;
+font-size:20px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+🛒 Tech Store
+</div>
+
+<div id="products" class="products"></div>
+
+<script>
+
+fetch("/api/products")
+.then(res=>res.json())
+.then(data=>{
+
+const box=document.getElementById("products");
+
+data.forEach(p=>{
+
+box.innerHTML+=`
+<div class="card">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+<p class="price">${p.price} جنيه</p>
+</div>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
